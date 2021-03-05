@@ -1,0 +1,151 @@
+﻿<UserControl x:Class="WinEvtLogWatcher.UserControls.SettingsUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WinEvtLogWatcher.UserControls" 
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             mc:Ignorable="d"          
+             d:DesignHeight="800" d:DesignWidth="800">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <GroupBox Margin="1" Header="Отображение">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Макс. кол-во отображаемых событий:" Margin="3"/>
+                    <dxe:TextEdit x:Name="maxEventsTextEdit" Text="{Binding MaxDisplayEvents, UpdateSourceTrigger=LostFocus}" Margin="3" 
+                                  ValidateOnTextInput="True" Validate="MaxDisplayEventsTextEdit_Validate" 
+                                  Mask="#####"
+                                  MaskType="Numeric"/>
+                    <TextBlock Text="Время отображения событий (мин) (0 - неограничено):" Margin="3"/>
+                    <dxe:TextEdit x:Name="periodEventsTextEdit" Text="{Binding PeriodDisplayEvents, UpdateSourceTrigger=LostFocus}" Margin="3" 
+                                  ValidateOnTextInput="True" Validate="DisplayEventsPeriodTextEdit_Validate"
+                                  Mask="##"
+                                  MaskType="Numeric"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Цветовая гамма" Margin="1">
+                <StackPanel Orientation="Vertical">
+                    <CheckBox IsChecked="{Binding UseDarkTheme}" Content="Использовать черную тему" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Цвета в таблице (фон и шрифт)" Margin="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--Critical-->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Critical: " VerticalAlignment="Center"/>
+                    <dxe:PopupColorEdit Grid.Row="0" Grid.Column="1" x:Name="criticalBg" ColumnCount="10" DefaultColor="Red" Color="{Binding CriticalBackgroundColor, Mode=TwoWay}" 
+                                                    ChipSize="Medium" ShowDefaultColorButton="True" />
+                    <dxe:PopupColorEdit Grid.Row="0" Grid.Column="2" x:Name="criticalFont" ColumnCount="10" DefaultColor="Yellow" Color="{Binding CriticalFontColor, Mode=TwoWay}" 
+                                                    ChipSize="Medium" ShowDefaultColorButton="True" />
+                    <!--Error-->
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Error: " VerticalAlignment="Center"/>
+                    <dxe:PopupColorEdit Grid.Row="1" Grid.Column="1" x:Name="errorBg" ColumnCount="10" DefaultColor="Red" Color="{Binding ErrorBackgroundColor, Mode=TwoWay}" 
+                                                    ChipSize="Medium" ShowDefaultColorButton="True"/>
+                    <dxe:PopupColorEdit Grid.Row="1" Grid.Column="2" x:Name="errorFont" ColumnCount="10" DefaultColor="Black" Color="{Binding ErrorFontColor, Mode=TwoWay}" 
+                                                    ChipSize="Medium" ShowDefaultColorButton="True"/>
+
+                    <!--Warning-->
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Warning: " VerticalAlignment="Center"/>
+                    <dxe:PopupColorEdit Grid.Row="2" Grid.Column="1" x:Name="warningBg" ColumnCount="10" DefaultColor="Yellow" Color="{Binding WarningBackgroundColor, Mode=TwoWay}" ChipSize="Medium" ShowDefaultColorButton="True" />
+                    <dxe:PopupColorEdit Grid.Row="2" Grid.Column="2" x:Name="warningFont" ColumnCount="10" DefaultColor="Black" Color="{Binding WarningFontColor, Mode=TwoWay}" ChipSize="Medium" ShowDefaultColorButton="True" />
+
+                    <!--Informational-->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Info: " VerticalAlignment="Center"/>
+                    <dxe:PopupColorEdit Grid.Row="3" Grid.Column="1" x:Name="infoBg" ColumnCount="10" DefaultColor="White" ChipSize="Medium" Color="{Binding InfoBackgroundColor, Mode=TwoWay}" ShowDefaultColorButton="True" />
+                    <dxe:PopupColorEdit Grid.Row="3" Grid.Column="2" x:Name="infoFont" ColumnCount="10" DefaultColor="Black" ChipSize="Medium" Color="{Binding InfoFontColor, Mode=TwoWay}" ShowDefaultColorButton="True" />
+
+                    <!--Verbose-->
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Verbose: " VerticalAlignment="Center"/>
+                    <dxe:PopupColorEdit Grid.Row="4" Grid.Column="1" x:Name="verboseBg" ColumnCount="10" DefaultColor="White" ChipSize="Medium" Color="{Binding VerboseBackgroundColor, Mode=TwoWay}" ShowDefaultColorButton="True" />
+                    <dxe:PopupColorEdit Grid.Row="4" Grid.Column="2" x:Name="verboseFont" ColumnCount="10" DefaultColor="Black" ChipSize="Medium" Color="{Binding VerboseFontColor, Mode=TwoWay}" ShowDefaultColorButton="True" />
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Настройка звуков" Margin="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--Critical-->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Critical: " VerticalAlignment="Center" Margin="1" />
+                    <TextBlock x:Name="criticalSoundFileTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding CriticalSoundFile}" VerticalAlignment="Center" MinWidth="50" Margin="1" />
+                    <Button Grid.Row="0" Grid.Column="2" Content="..." Width="30" VerticalAlignment="Center" 
+                            Command="{Binding OpenSoundFileCommand}" CommandParameter="1"/>
+                    <Button Grid.Row="0" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Command="{Binding TestPlaySoundCommand}" CommandParameter="{Binding CriticalSoundFile}"
+                            Margin="1">
+                        <Button.Content>
+                            <Image Source="/Images/Play.png" Height="16" Width="16" />
+                        </Button.Content>
+                    </Button>
+                    <!--Error-->
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Error: " VerticalAlignment="Center" Margin="1" />
+                    <TextBlock x:Name="errorSoundFileTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding ErrorSoundFile}" VerticalAlignment="Center" MinWidth="50" Margin="1" />
+                    <Button Grid.Row="1" Grid.Column="2" Content="..." Width="30" VerticalAlignment="Center" />
+                    <Button Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Command="{Binding TestPlaySoundCommand}" CommandParameter="{Binding ErrorSoundFile}"
+                            Margin="1">
+                        <Button.Content>
+                            <Image Source="/Images/Play.png" Height="16" Width="16" />
+                        </Button.Content>
+                    </Button>
+                    <!--Warning-->
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Warning: " VerticalAlignment="Center" Margin="1" />
+                    <TextBlock x:Name="warningSoundFileTextBox" Grid.Row="2" Grid.Column="1" Text="{Binding WarningSoundFile}" VerticalAlignment="Center" MinWidth="50" Margin="1" />
+                    <Button Grid.Row="2" Grid.Column="2" Content="..." Width="30" VerticalAlignment="Center" />
+                    <Button Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Command="{Binding TestPlaySoundCommand}" CommandParameter="{Binding WarningSoundFile}"
+                            Margin="1">
+                        <Button.Content>
+                            <Image Source="/Images/Play.png" Height="16" Width="16" />
+                        </Button.Content>
+                    </Button>
+                    <!--Informational-->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Info: " VerticalAlignment="Center" Margin="1" />
+                    <TextBlock x:Name="infoSoundFileTextBox" Grid.Row="3" Grid.Column="1" Text="{Binding InfoSoundFile}" VerticalAlignment="Center" MinWidth="50" Margin="1" />
+                    <Button Grid.Row="3" Grid.Column="2" Content="..." Width="30" VerticalAlignment="Center" />
+                    <Button Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Command="{Binding TestPlaySoundCommand}" CommandParameter="{Binding InfoSoundFile}"
+                            Margin="1">
+                        <Button.Content>
+                            <Image Source="/Images/Play.png" Height="16" Width="16" />
+                        </Button.Content>
+                    </Button>
+                    <!--Verbose-->
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Verbose: " VerticalAlignment="Center" Margin="1" />
+                    <TextBlock x:Name="verbosSoundFileTextBox" Grid.Row="4" Grid.Column="1" Text="{Binding VerboseSoundFile}" VerticalAlignment="Center" MinWidth="50" Margin="1" />
+                    <Button Grid.Row="4" Grid.Column="2" Content="..." Width="30" VerticalAlignment="Center"/>
+                    <Button Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Command="{Binding TestPlaySoundCommand}" CommandParameter="{Binding VerboseSoundFile}"
+                            Margin="1">
+                        <Button.Content>
+                            <Image Source="/Images/Play.png" Height="16" Width="16" />
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

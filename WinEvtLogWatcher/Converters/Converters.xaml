@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WinEvtLogWatcher">
+    <local:EventPropertiesToStringConverter x:Key="eventPropsToStringConverter" />
+    <local:EventLevelToStringConverter x:Key="eventLevelToStringConverter" />
+    <local:DateTimeToStringConverter x:Key="dateTimeToStringConverter" />
+    <local:BoolToBrushConverter x:Key="boolToBrushConverter"/>
+    <local:DateTimeToTimeConverter x:Key="dateTimeToTimeConverter" />
+    <local:SubscribeStatusToStringConverter x:Key="subscribeStatusToStringConverter" />
+    <local:BoolToImageConverter x:Key="boolToImageConverter" />
+    <local:SubscribeStatusToImageConverter x:Key="subscribeStatusToImageConverter"/>
+    <local:LevelGroupToBackgroundColorConverter x:Key="levelGroupToColorConverter" />
+</ResourceDictionary>

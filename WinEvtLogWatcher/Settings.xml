@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <QueryString Value="*[System[Level=1 or Level=2 or Level=3]]" />
+  <MaxEventsToDisplay Value="10000" />
+  <PeriodToDisplayEvents Value="60" />
+  <AutoSubscribeOnStartup Value="true" />
+  <UseDarkTheme Value="false" />
+  <Computers>
+    <Computer Ip="10.2.180.10" />
+    <Computer Ip="10.2.180.11" />
+    <Computer Ip="10.2.180.110" />
+    <Computer Ip="10.2.180.111" />
+  </Computers>
+  <Sounds>
+    <SoundFile Name="Critical" FileName="C:\Windows\Media\Alarm01.wav" />
+    <SoundFile Name="Error" FileName="" />
+    <SoundFile Name="Warning" FileName="" />
+    <SoundFile Name="Informational" FileName="" />
+    <SoundFile Name="Verbose" FileName="" />
+  </Sounds>
+  <Colors>
+    <Color Name="Critical" BackgroundColor="#FFFF0000" FontColor="#FFFFFF00" />
+    <Color Name="Error" BackgroundColor="#FFFF0000" FontColor="#FF000000" />
+    <Color Name="Warning" BackgroundColor="#FFFFFF00" FontColor="#FF000000" />
+    <Color Name="Informational" BackgroundColor="#FFFFFFFF" FontColor="#FF000000" />
+    <Color Name="Verbose" BackgroundColor="#FFFFFFFF" FontColor="#FF000000" />
+  </Colors>
+</root>

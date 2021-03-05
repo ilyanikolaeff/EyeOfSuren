@@ -1,0 +1,175 @@
+﻿<dx:ThemedWindow 
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        x:Class="WinEvtLogWatcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" 
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+        xmlns:userControls="clr-namespace:WinEvtLogWatcher.UserControls"
+        mc:Ignorable="d"
+        Title="Eye of Sauron"
+        TitleAlignment="Left"
+        Height="450" 
+        SizeToContent="Width"
+        WindowState="Maximized"
+    
+        Closed="ThemedWindow_Closed"
+        Loaded="ThemedWindow_Loaded"
+        StateChanged="ThemedWindow_StateChanged"
+    
+        SnapsToDevicePixels="True">
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:CurrentWindowService />
+        <dx:NotifyIconService Icon="Icon.ico" >
+            <dx:NotifyIconService.ContextMenu>
+                <dxb:PopupMenu>
+                    <dxb:BarButtonItem Content="Восстановить" Command="{Binding RestoreCommand}" Glyph="{dx:DXImage 'SvgImages/XAF/Action_Open_Object.svg'}"/>
+                    <dxb:BarButtonItem Content="Закрыть" Command="{Binding CloseCommand}" Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/Close.svg'}"/>
+                </dxb:PopupMenu>
+            </dx:NotifyIconService.ContextMenu>
+        </dx:NotifyIconService>
+        <dxmvvm:NotificationService/>
+    </dxmvvm:Interaction.Behaviors>
+    <Window.Resources>
+
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <dxb:BarContainerControl Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left">
+            <dxb:ToolBarControl Caption="Команды" GlyphSize="Large" AllowCustomizationMenu="True" Margin="5,0,5,0">
+                <dxb:BarButtonItem Content="Сохранить" BarItemDisplayMode="ContentAndGlyph" Glyph="{dx:DXImage 'SvgImages/Save/SaveAll.svg'}" Command="{Binding SaveCommand}" />
+                <dxb:BarItemSeparator/>
+                <dxb:BarButtonItem Content="Квитировать" BarItemDisplayMode="ContentAndGlyph" Glyph="{dx:DXImage 'SvgImages/Spreadsheet/ClearAll.svg'}" Command="{Binding ClearCommand}"/>
+                <dxb:BarItemSeparator/>
+                <dxb:BarButtonItem Content="Подписаться" BarItemDisplayMode="ContentAndGlyph" Glyph="{dx:DXImage 'SvgImages/XAF/ModelEditor_Actions.svg'}" Command="{Binding StartCommand}"/>
+                <dxb:BarItemSeparator/>
+                <dxb:BarButtonItem Content="Остановить" BarItemDisplayMode="ContentAndGlyph" Glyph="{dx:DXImage 'SvgImages/Icon Builder/Actions_Forbid.svg'}" Command="{Binding StopCommand}"/>
+                <dxb:BarItemSeparator/>
+                <dxb:BarCheckItem Content="Звук" BarItemDisplayMode="ContentAndGlyph" IsChecked="{Binding SoundsActive}" Glyph="{dx:DXImage 'SvgImages/Icon Builder/Security_Warning.svg'}" />
+                <dxb:BarItemSeparator/>
+                <dxb:BarEditItem x:Name="currentUserBarEdit" Content="Пользователь: " BarItemDisplayMode="ContentAndGlyph" 
+                                 Glyph="{dx:DXImage 'SvgImages/Business Objects/BO_Skull.svg'}" EditValue="{Binding CurrentUser}" EditWidth="150">
+                    <dxb:BarEditItem.EditSettings>
+                        <dxe:ComboBoxEditSettings IsTextEditable="False" ItemsSource="{Binding Users}" />
+                    </dxb:BarEditItem.EditSettings>
+                </dxb:BarEditItem>
+            </dxb:ToolBarControl>
+        </dxb:BarContainerControl>
+
+        <dxb:StatusBarControl Caption="Статус-бар" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <dxb:BarStaticItem Name="barStaticItem"
+                               Content="{Binding SubscribeStatus, Converter={StaticResource subscribeStatusToStringConverter}}"
+                               Glyph="{Binding SubscribeStatus, Converter={StaticResource subscribeStatusToImageConverter}}"
+                               AutoSizeMode="Fill"
+                               BarItemDisplayMode="ContentAndGlyph" />
+        </dxb:StatusBarControl>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
+            <!--<GroupBox Header="Текущий пользователь">
+                <ComboBox x:Name="cbUsers" ItemsSource="{Binding Users}" SelectedItem="{Binding CurrentUser}" VerticalAlignment="Center" FontSize="16" Margin="5" MinWidth="200">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DisplayName}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </GroupBox>-->
+            <dx:DropDownButton x:Name="computersDropDwnBtn" Content="Компьютеры" Glyph="{dx:DXImage 'SvgImages/Icon Builder/Electronics_DesktopWindows.svg'}" >
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Добавить" Margin="1" Command="{Binding AddComputerCommand}"></Button>
+                        <Button Content="Удалить" Margin="1" Command="{Binding RemoveComputerCommand}"></Button>
+                    </StackPanel>
+                    <DataGrid x:Name="computersGrid" 
+                              ItemsSource="{Binding LogSubscribers}" 
+                              AutoGenerateColumns="False" 
+                              Margin="1" 
+                              SelectedItem="{Binding SelectedLogSubscriber}" 
+                              Width="Auto"
+                              Height="Auto"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Background" Value="{Binding IsInitialized, Converter={StaticResource boolToBrushConverter}}"/>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn IsReadOnly="True" Binding="{Binding Computer.Name}" Header="Имя компьютера" />
+                            <DataGridTextColumn IsReadOnly="True" Binding="{Binding Computer.Ip}" Header="IP-адрес" />
+                            <!--<DataGridCheckBoxColumn Binding="{Binding LogWatcher.Enabled}" Header="Состояние подписки" />-->
+                            <DataGridTextColumn IsReadOnly="True" Binding="{Binding InitializeStatus}" Header="Статус" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </dx:DropDownButton>
+            <dx:DropDownButton Content="Настройки" Glyph="{dx:DXImage 'SvgImages/Icon Builder/Actions_Settings.svg'}">
+                <userControls:SettingsUserControl />
+            </dx:DropDownButton>
+            <Button Command="{Binding ShowAboutWindowCommand}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Image Source="{dx:DXImage 'Office2013/Support/Info_32x32.png'}" />
+                        <TextBlock Text="Инфо" VerticalAlignment="Center" Margin="5"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+        <dxg:GridControl x:Name="eventsGridControl"
+                         Grid.Row="1"
+                         Grid.Column="0"
+                         Grid.ColumnSpan="2"
+                         ItemsSource="{Binding Events}"
+                         OptimizeSummaryCalculation="True"
+                         SelectionMode="None"
+                         CurrentItem="{Binding CurrentItem}"
+                         dx:DXSerializer.StoreLayoutMode="All">
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="eventsTableView"
+                               AllowEditing="False"
+                               AllowSorting="True"
+                               AllowColumnFiltering="True"
+                               ShowFixedTotalSummary="True"
+                               ShowGroupPanel="True"
+                               BestFitMode="VisibleRows"
+                               ColumnFilterPopupMode="Excel"
+                               EnableSelectedRowAppearance="False"
+                               RowStyle="{StaticResource TableViewRowStyle}">
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn Header="Время события" Width="Auto" Binding="{Binding TimeCreated, Converter={StaticResource dateTimeToStringConverter}}" FieldName="TimeCreated" />
+                <dxg:GridColumn Header="Имя компьютера" Width="Auto" Binding="{Binding MachineName}" FieldName="MachineName" />
+                <dxg:GridColumn Header="Источник события" Width="Auto" Binding="{Binding ProviderName}" FieldName="ProviderName" />
+                <dxg:GridColumn Header="Журнал" Width="Auto" Binding="{Binding LogName}" FieldName="LogName" />
+                <dxg:GridColumn Header="Описание события" Width="*" Binding="{Binding Description}" FieldName="Description" >
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings TextWrapping="WrapWithOverflow" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="Уровень события" Width="Auto" Binding="{Binding Level}" FieldName="Level" />
+                <dxg:GridColumn Header="Группа события" Width="Auto" Binding="{Binding LevelGroup}" FieldName="LevelGroup" />
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.GroupSummary>
+                <dxg:GridSummaryItem SummaryType="Count" />
+            </dxg:GridControl.GroupSummary>
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem SummaryType="Count" Alignment="Right" />
+            </dxg:GridControl.TotalSummary>
+        </dxg:GridControl>
+    </Grid>
+</dx:ThemedWindow>
